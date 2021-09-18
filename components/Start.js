@@ -39,28 +39,48 @@ export default class Start extends React.Component {
 							</Text>
 							<View style={styles.colorPicker}>
 								<TouchableOpacity
+									accessible={true}
+									accessibilityLabel='Select Background Color'
+									accessibilityHint='Sets Background Color Of Chat Interface'
+									accessibilityRole='button'
 									activeOpacity={0.5}
 									style={[styles.color, styles.colorBlack]}
 									onPress={() => this.setState({ color: '#090C08' })}
 								/>
-								<TouchableOpacity 
+								<TouchableOpacity
+									accessible={true}
+									accessibilityLabel='Select Background Color'
+									accessibilityHint='Sets Background Color Of Chat Interface'
+									accessibilityRole='button'
 									activeOpacity={0.5}
 									style={[styles.color, styles.colorGrey]}
 									onPress={() => this.setState({ color: '#474056' })}
 								/>
 								<TouchableOpacity
+									accessible={true}
+									accessibilityLabel='Select Background Color'
+									accessibilityHint='Sets Background Color Of Chat Interface'
+									accessibilityRole='button'
 									activeOpacity={0.5}
 									style={[styles.color, styles.colorBlue]}
 									onPress={() => this.setState({ color: '#8A95A5' })}
 								/>
 								<TouchableOpacity
+									accessible={true}
+									accessibilityLabel='Select Background Color'
+									accessibilityHint='Sets Background Color Of Chat Interface'
+									accessibilityRole='button'
 									activeOpacity={0.5}
 									style={[styles.color, styles.colorGreen]}
 									onPress={() => this.setState({ color: '#B9C6AE' })}
 								/>
 							</View>
 						</View>
-						<TouchableOpacity 
+						<TouchableOpacity
+							accessible={true}
+							accessibilityLabel='Go To Chat'
+							accessibilityHint='Takes You To The Chat'
+							accessibilityRole='button'
 							style={styles.button}
 							onPress={() => {
 								this.props.navigation.navigate('Chat', {
