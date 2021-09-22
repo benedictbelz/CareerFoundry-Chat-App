@@ -3,6 +3,8 @@ import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import MapView from 'react-native-maps';
+import CustomActions from './CustomActions'
 import firebase from 'firebase';
 require('firebase/firestore');
 
@@ -39,7 +41,7 @@ export default class Chat extends React.Component {
 		// SET OPTIONS
 		const { name } = this.props.route.params;
 		this.props.navigation.setOptions({ title: name });
-
+		// CHECK CONNECTION
 		NetInfo.fetch().then(connection => { 
 			if (connection.isConnected) {
 				// CONNECTION ONLINE
@@ -76,6 +78,7 @@ export default class Chat extends React.Component {
 
 	componentWillUnmount() {
 		this.authUnsubscribe();
+		this.unsubscribe();
 	}
 
 	async getMessages() {
@@ -113,8 +116,10 @@ export default class Chat extends React.Component {
 			uid: this.state.uid,
 			_id: message._id,
 			createdAt: message.createdAt,
-			text: message.text,
+			text: message.text || '',
 			user: message.user,
+			image: message.image || null,
+            location: message.location || null
 		});
 	}
 
@@ -125,11 +130,13 @@ export default class Chat extends React.Component {
 		  	messages.push({
 				_id: data._id,
 				createdAt: data.createdAt.toDate(),
-				text: data.text,
+				text: data.text || '',
 				user: {
 			  		_id: data.user._id,
 			  		name: data.user.name,
 				},
+				image: data.image || null,
+				location: data.location || null
 		  	});
 		});
 		this.setState({ messages });
@@ -151,11 +158,35 @@ export default class Chat extends React.Component {
 	}
 
 	renderInputToolbar(props) {  
-		if (this.state.connection === false) {
+		if (this.state.connection === false) {}
+		else return <InputToolbar {...props}/>;
+	}
 
+	renderCustomActions(props) {
+        return <CustomActions {...props} />;
+    };
+
+	renderCustomView(props) {
+		const { currentMessage } = props;
+		if (currentMessage.location) {
+			return (
+				<MapView
+					style={{
+						width: 150,
+						height: 100,
+						borderRadius: 10,
+						margin: 2
+					}}
+					region={{
+						latitude: currentMessage.location.latitude,
+						longitude: currentMessage.location.longitude,
+						latitudeDelta: 0.0922,
+						longitudeDelta: 0.0421,
+					}}
+				/>
+			);
 		}
-		else
-		  	return <InputToolbar {...props}/>;
+		return null;
 	}
 
 	render() {
@@ -166,8 +197,10 @@ export default class Chat extends React.Component {
 					isTyping={true}
 					messages={this.state.messages}
 					onSend={messages => this.onSend(messages)}
-					renderInputToolbar={this.renderInputToolbar.bind(this)}
+					renderActions={this.renderCustomActions}
 					renderBubble={this.renderBubble.bind(this)}
+					renderCustomView={this.renderCustomView}
+					renderInputToolbar={this.renderInputToolbar.bind(this)}
 					user={this.state.user}
 				/>
 				{Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height' /> : null}
