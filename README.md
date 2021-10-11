@@ -19,4 +19,4 @@ Build a chat app for mobile devices using React Native. The app will provide use
 
 ## Open Project
 
-Download the folder and install the dependencies via 'yarn'. Afterwards download the Expo App on your smartphone and start the project via 'yarn start' - you are able to open the app by scanning the QR-Code with your mobile phone.
+Download the folder and install the dependencies via `yarn`. Afterwards download the Expo App on your smartphone and start the project via `yarn start` - you are able to open the app by scanning the QR-Code with your mobile phone.
