@@ -1,6 +1,6 @@
 # Chat App
 
-
+https://user-images.githubusercontent.com/43958228/136857121-04166707-2b92-44ff-a63f-8d840ec5557b.mp4
 
 ## Description
 
@@ -12,7 +12,7 @@ Build a chat app for mobile devices using React Native. The app will provide use
 
 ## Technologies
 
-- React-Native
+- React Native
 - Expo
 - Gifted Chat
 - Firebase
